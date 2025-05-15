@@ -9,12 +9,24 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.3",
+    "@heroicons/react": "^2.2.0",
+    "@hookform/resolvers": "^5.0.1",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "@types/js-cookie": "^3.0.6",
+    "input-otp": "^1.4.2",
     "isbot": "^5.1.27",
+    "js-cookie": "^3.0.5",
+    "js-cookies": "^1.0.4",
+    "ky": "^1.8.1",
     "react": "^19.1.0",
+    "react-code-input": "^3.10.1",
     "react-dom": "^19.1.0",
-    "react-router": "^7.5.3"
+    "react-hook-form": "^7.56.3",
+    "react-router": "^7.5.3",
+    "swr": "^2.3.3",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
