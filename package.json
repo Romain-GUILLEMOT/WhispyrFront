@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "dotenv -e .env react-router build",
-    "dev": "dotenv -e .env.dev react-router dev",
-    "start": "dotenv -e .env react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "build": "dotenv -e .env react-router build",
+    "dev": "dotenv -e .env.dev react-router dev",
+    "start": "dotenv -e .env react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.3",
