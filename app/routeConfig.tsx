@@ -4,9 +4,15 @@ import { rootRoute } from './router'
 
 export const chatRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/chat',
-    component: lazyRouteComponent(() => import('./routes/chat/ChatContainer')),
-})
+    path: 'chat', // Chemin de base pour le chat
+});
+
+export const serverChatRoute = createRoute({
+    getParentRoute: () => chatRoute, // Fait partie de la route chat
+    path: '$serverId', // Chemin dynamique pour l'ID du serveur
+    // Le composant qui sera rendu lorsque cette route est active
+    component: lazyRouteComponent(() => import('./routes/chat/ServerChatContainer')),
+});
 
 export const homeRoute = createRoute({
     getParentRoute: () => rootRoute,

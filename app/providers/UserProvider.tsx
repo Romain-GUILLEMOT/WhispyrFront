@@ -14,6 +14,7 @@ interface UserContextType {
     user: UserDetails | null;
     setUser: (value: UserDetails) => void;
     mutateUser: () => void;
+    isLoading: boolean; // <-- AJOUTÉ: pour exposer l'état de chargement
 }
 
 // Crée le contexte avec un type par défaut
@@ -46,8 +47,23 @@ export function UserProvider({ children }: UserProviderProps) {
     );
 
     useEffect(() => {
-        if(data && !isLoading) {
-            if(data.status == 'success' && data.data) {
+        // La logique d'initialisation de l'utilisateur dans le useEffect peut être améliorée
+        // pour mieux refléter les états de SWR (loading, error, data).
+        // En général, si isLoading est true, on attend.
+        // Si error est présent, l'utilisateur n'est pas authentifié.
+        // Si data est présent et succès, l'utilisateur est authentifié.
+
+        if (isLoading) {
+            // Pas d'action si en chargement, l'état `user` reste tel quel (probablement null au début)
+            return;
+        }
+
+        if (error) {
+            // En cas d'erreur de la requête (non authentifié, serveur down, etc.)
+            setUser({ authentificated: false });
+        } else if (data) {
+            // Si des données sont reçues
+            if (data.status === 'success' && data.data) {
                 const userData = data.data;
                 setUser({
                     id: userData.id,
@@ -57,20 +73,14 @@ export function UserProvider({ children }: UserProviderProps) {
                     authentificated: true,
                 });
             } else {
-                setUser({
-                    authentificated: false
-                })
+                // Si la requête est un succès mais le statut est 'error' ou data.data est manquant
+                setUser({ authentificated: false });
             }
-
-        } else if(error && !isLoading) {
-            setUser({
-                authentificated: false
-            })
         }
+    }, [data, error, isLoading]); // Ajout de isLoading aux dépendances
 
-    }, [data, error]);
     return (
-        <UserContext.Provider value={{ user, setUser, mutateUser }}>
+        <UserContext.Provider value={{ user, setUser, mutateUser, isLoading }}> {/* <-- AJOUTÉ: isLoading dans la valeur du contexte */}
             {children}
         </UserContext.Provider>
     );

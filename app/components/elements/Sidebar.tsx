@@ -9,6 +9,9 @@ import Loading from "@/components/elements/Loading";
 import { Dialog, Transition } from '@headlessui/react';
 import { PlusIcon, CameraIcon } from '@heroicons/react/24/solid';
 import ky from "ky";
+import {useWebSocket} from "@/providers/WebSocketProvider";
+import {Link} from "@tanstack/react-router";
+import {useDebug} from "@/providers/DebugProvider";
 
 // ✅ 1. Définir le schéma de validation avec Zod
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -36,8 +39,10 @@ type CreateServerInput = z.infer<typeof createServerSchema>;
 
 export default function Sidebar() {
     // --- Hooks ---
-    const { data: servers, error, mutate, isLoading } = useSWR('servers/', kyFetcher);
+    const { data: servers, error, mutate, isLoading } = useSWR('servers', kyFetcher);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { setCurrentServerId, currentServerId } = useWebSocket();
+    const { isDebugEnabled } = useDebug();
 
     // ✅ 2. Initialiser react-hook-form avec le resolver Zod
     const {
@@ -112,7 +117,7 @@ export default function Sidebar() {
 
     // --- Rendu JSX ---
     return (
-        <aside className="w-20 bg-[#1e1e1e] py-3 flex-shrink-0 flex flex-col items-center gap-2 border-r border-[#2d2d2d]">
+        <aside className={`w-20  py-3 flex-shrink-0 flex flex-col items-center gap-2 border-r ${isDebugEnabled ? "bg-red-700 border-red-900" : "border-[#2d2d2d] bg-[#1e1e1e]"}`}>
             <div className="mb-2 group relative">
                 {/* Icône de la marque ici */}
             </div>
@@ -120,7 +125,7 @@ export default function Sidebar() {
 
             <div className="flex flex-col items-center gap-2 overflow-y-auto flex-grow w-full no-scrollbar">
                 {servers?.map((server) => (
-                    <div key={server.server_id} className="group relative cursor-pointer">
+                    <Link to="/chat/$serverId" params={{ serverId: server.server_id }} key={server.server_id} className="group relative cursor-pointer">
                         <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 h-2 w-1 bg-white rounded-r-full scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-in-out"/>
                         <div className="w-12 h-12 rounded-full bg-[#313338] overflow-hidden shadow-lg transition-all duration-200 ease-in-out group-hover:rounded-2xl">
                             <img
@@ -132,7 +137,7 @@ export default function Sidebar() {
                         <span className="absolute left-full ml-4 top-1/2 -translate-y-1/2 bg-[#111214] text-white font-semibold text-sm px-3 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap">
                             {server.name}
                         </span>
-                    </div>
+                    </Link>
                 ))}
             </div>
 
@@ -141,6 +146,7 @@ export default function Sidebar() {
                 onClick={() => setIsModalOpen(true)}
             >
                 <PlusIcon className="w-6 h-6" />
+
             </button>
 
             <Transition appear show={isModalOpen} as={Fragment}>

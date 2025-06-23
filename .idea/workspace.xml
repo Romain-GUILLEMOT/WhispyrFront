@@ -4,37 +4,24 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity.">
-      <change afterPath="$PROJECT_DIR$/app/App.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/Error404.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/ErrorBoundary.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/Loading.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/LoadingFull.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/elements/Sidebar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/main.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routeConfig.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/router.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/ChatContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="Add chat. Correct some error with auth and add icons to servers">
+      <change afterPath="$PROJECT_DIR$/app/components/ChatServer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/DebugModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/providers/DebugProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/providers/WebSocketProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/routes/chat/ServerChatContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.exemple" beforeDir="false" afterPath="$PROJECT_DIR$/.env.exemple" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/http.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/auth/CodeBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/auth/CodeBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/auth/EmailBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/auth/EmailBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/auth/LoginBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/auth/LoginBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/auth/RegisterBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/auth/RegisterBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/elements/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/elements/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/elements/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/elements/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/providers/UserProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/providers/UserProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/auth/LoginContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/auth/LoginContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bun.lock" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react-router.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routeConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routeConfig.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/router.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/chat/ChatContainer.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +88,7 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19557291" />
-      <window_info id="Commit" order="1" weight="0.21549708" />
+      <window_info id="Commit" order="1" weight="0.19557291" />
       <window_info id="Welcome to GitHub Copilot" order="2" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -111,10 +98,10 @@
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" weight="0.3303821" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.30601853" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.3305" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3300926" />
+      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.3300926" />
       <window_info anchor="bottom" id="Services" order="5" />
-      <window_info anchor="bottom" id="Find" order="6" weight="0.32974744" />
+      <window_info anchor="bottom" id="Find" order="6" weight="0.3300926" />
       <window_info anchor="right" id="PR AI Assistant" />
       <window_info anchor="right" id="Endpoints" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
@@ -170,7 +157,7 @@
       <workItem from="1747315817893" duration="2618000" />
       <workItem from="1747318468387" duration="18768000" />
       <workItem from="1750666698642" duration="3974000" />
-      <workItem from="1750672741399" duration="9273000" />
+      <workItem from="1750672741399" duration="16009000" />
     </task>
     <task id="LOCAL-00001" summary="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity.">
       <option name="closed" value="true" />
@@ -180,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747317919514</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add chat. Correct some error with auth and add icons to servers">
+      <option name="closed" value="true" />
+      <created>1750702506439</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750702506439</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +183,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity." />
+    <MESSAGE value="Add chat. Correct some error with auth and add icons to servers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add chat. Correct some error with auth and add icons to servers" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

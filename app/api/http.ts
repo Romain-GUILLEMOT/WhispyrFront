@@ -71,7 +71,7 @@ const http = ky.create({
     hooks: {
         beforeRequest: [
             (request) => {
-                console.log('[DEBUG] access_token', Cookies.get('access_token'));
+               // console.log('[DEBUG] access_token', Cookies.get('access_token'));
 
                 const token = getAccessToken();
                 if (token) {
