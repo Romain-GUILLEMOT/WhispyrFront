@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ky from "ky";
-import createNotification from "~/components/Notification";
+import createNotification from "@/components/Notification";
 
 const emailSchema = z.object({
     email: z.string().email('Adresse email invalide'),

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const getAccessToken = () => Cookies.get('access_token');
+export const getAccessToken = () => Cookies.get('access_token');
 const getRefreshToken = () => Cookies.get('refresh_token');
 
 const refreshTokenIfNeeded = async (
@@ -101,8 +101,10 @@ export const kyFetcher = async (url: string | URL): Promise<any> => {
         const response = await http.get(url.toString());
         return await response.json();
     } catch (error: any) {
+        console.log(error)
         if (error instanceof HTTPError) {
             const errorBody = await error.response.json();
+
             return {'status': 'error', 'message': 'Non connecter'};
         }
         return {'status': 'error', 'message': 'Non connecter'};

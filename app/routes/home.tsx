@@ -1,14 +1,22 @@
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { useUser } from "~/providers/UserProvider";
+import { useUser } from "@/providers/UserProvider";
+import {useEffect, useState} from "react";
 
-export default function Home() {
+export default function HomeContainer() {
+  const [ready, setReady] = useState(false);
   const { user } = useUser();
 
-  if (!user) return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="text-gray-400 text-xl">Chargement...</div>
-      </div>
-  );
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready || !user) {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-950">
+          <div className="text-gray-400 text-xl">Chargement...</div>
+        </div>
+    );
+  }
 
   return (
       <div className="min-h-screen bg-gradient-to-br from-green-900 via-gray-950 to-black flex items-center justify-center">

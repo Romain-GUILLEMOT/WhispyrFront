@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState, useEffect, type ReactNode} from 'react';
-import {kyFetcher} from "~/api/http";
+import {kyFetcher} from "@/api/http";
 import useSWR from "swr";
 
 interface UserDetails {

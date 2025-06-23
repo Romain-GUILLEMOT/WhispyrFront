@@ -4,7 +4,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { OTPInput } from "input-otp";
 import ky from "ky";
-import createNotification from "~/components/Notification";
+import createNotification from "@/components/Notification";
 
 interface Props {
     email: string;

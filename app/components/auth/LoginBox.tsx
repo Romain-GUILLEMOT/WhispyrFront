@@ -9,9 +9,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ky from "ky";
-import createNotification from "~/components/Notification";
+import createNotification from "@/components/Notification";
 import Cookies from "js-cookie";
-import {useNavigate} from "react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 const emailSchema = z.object({
     email: z.string().email('Adresse email invalide'),
@@ -60,11 +60,11 @@ export default function LoginBox({ email, loading, setLoading }: Props) {
                 sameSite: 'Strict',
             })
             setLoading(false)
-            navigate('/');
+            navigate({to: '/'});
         } catch (err: any) {
             console.log(err)
-            const errorBody = await err.response.json();
-            createNotification({type: 'error', message: errorBody.message || 'Erreur inconnue'})
+            setLoading(false);
+            createNotification({type: 'error', message: err.response.json().message || 'Erreur inconnue'})
 
         }
         setLoading(false);

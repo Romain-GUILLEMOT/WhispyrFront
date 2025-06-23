@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ky from 'ky';
-import createNotification from '~/components/Notification';
-import {useNavigate} from "react-router";
+import createNotification from '@/components/Notification';
 import Cookies from 'js-cookie'
+import { useNavigate } from "@tanstack/react-router";
 
 const registerSchema = z.object({
     username: z.string().min(3, 'Min 3 caractères').max(32, 'Max 32 caractères'),
@@ -71,7 +71,7 @@ export default function RegisterFinalForm({ email, code, loading, setLoading }: 
                 sameSite: 'Strict',
             })
             setLoading(false)
-            navigate('/');
+            navigate({to: '/'});
         } catch (err: any) {
             const errorBody = await err.response.json();
             setLoading(false)
@@ -82,6 +82,12 @@ export default function RegisterFinalForm({ email, code, loading, setLoading }: 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (file.size > 8 * 1024 * 1024) { // 8 Mo
+                createNotification({ type: 'error', message: "L'image ne doit pas dépasser 8 Mo." });
+                if (avatarRef.current) avatarRef.current.value = ''; // reset input
+                setPreview(null);
+                return;
+            }
             const reader = new FileReader();
             reader.onloadend = () => setPreview(reader.result as string);
             reader.readAsDataURL(file);
