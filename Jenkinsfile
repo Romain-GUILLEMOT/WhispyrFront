@@ -12,7 +12,7 @@ pipeline {
           }
         }
 
-   /*     stage('SonarQube Analysis') {
+       stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool name: 'Main', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -22,7 +22,7 @@ pipeline {
             }
           }
         }
-*/
+
         stage('Docker Build & Push') {
             steps {
                 script {
