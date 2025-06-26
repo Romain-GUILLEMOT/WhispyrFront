@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="SonarQube">
+    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="Add new layout">
       <change afterPath="$PROJECT_DIR$/app/components/elements/ChannelsSidebar.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/providers/ChannelProvider.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/providers/ServerProvider.tsx" afterDir="false" />
@@ -88,11 +88,12 @@
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
       <window_info id="Merge Requests" />
+      <window_info id="Backup and Sync History" />
       <window_info id="npm" side_tool="true" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15964285" />
-      <window_info id="Commit" order="1" weight="0.15994152" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.15964285" />
+      <window_info active="true" id="Commit" order="1" visible="true" weight="0.15964285" />
       <window_info id="Welcome to GitHub Copilot" order="2" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -101,8 +102,8 @@
       <window_info anchor="bottom" id="File Transfer" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info anchor="bottom" id="Problems View" order="2" weight="0.3303821" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.2991761" />
+      <window_info active="true" anchor="bottom" id="Problems View" order="2" visible="true" weight="0.2991761" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.2991761" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.29869527" />
       <window_info anchor="bottom" id="Services" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.3300926" />
@@ -162,7 +163,7 @@
       <workItem from="1747318468387" duration="18768000" />
       <workItem from="1750666698642" duration="3974000" />
       <workItem from="1750672741399" duration="27805000" />
-      <workItem from="1750922638403" duration="40000" />
+      <workItem from="1750922638403" duration="445000" />
     </task>
     <task id="LOCAL-00001" summary="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity.">
       <option name="closed" value="true" />
@@ -196,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750709750894</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add new layout">
+      <option name="closed" value="true" />
+      <created>1750923096525</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750923096526</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +216,8 @@
     <MESSAGE value="Add chat. Correct some error with auth and add icons to servers" />
     <MESSAGE value="Continue working on server chat. Added debug mode" />
     <MESSAGE value="SonarQube" />
-    <option name="LAST_COMMIT_MESSAGE" value="SonarQube" />
+    <MESSAGE value="Add new layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add new layout" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

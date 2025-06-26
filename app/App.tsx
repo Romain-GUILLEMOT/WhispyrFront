@@ -1,5 +1,4 @@
 import {Outlet} from '@tanstack/react-router';
-import Header from '@/components/elements/Header';
 import Sidebar from '@/components/elements/Sidebar';
 import {useEffect} from 'react';
 import {useUser} from "@/providers/UserProvider";

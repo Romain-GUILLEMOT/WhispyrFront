@@ -1,10 +1,8 @@
 import React from 'react';
-import { Outlet, useParams } from '@tanstack/react-router';
-import ChannelsSidebar from '@/components/elements/ChannelsSidebar';
+import { Outlet } from '@tanstack/react-router';
 
 export default function ServerLayout() {
     // On récupère le serverId depuis les paramètres de sa propre route parente
-    const { serverId } = useParams({ from: '/chat/$serverId' });
 
     return (
         <div className="flex h-full w-full">

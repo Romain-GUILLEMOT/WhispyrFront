@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef, useEffect } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import useSWR from "swr";
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -9,7 +9,6 @@ import { Dialog, Transition } from '@headlessui/react';
 import { PlusIcon, CameraIcon } from '@heroicons/react/24/solid';
 import ky from "ky";
 import { Link } from "@tanstack/react-router";
-import { useDebug } from "@/providers/DebugProvider";
 import { useServer, type Server } from '@/providers/ServerProvider';
 import {SparklesIcon} from "@heroicons/react/16/solid"; // <-- Import du Provider
 
@@ -29,7 +28,6 @@ export default function Sidebar() {
     // --- Hooks ---
     const { data: servers, error, mutate, isLoading } = useSWR<Server[]>('servers', kyFetcher);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { isDebugEnabled } = useDebug();
     const { currentServer, setCurrentServer } = useServer(); // <-- Utilisation du Provider
 
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm<CreateServerInput>({

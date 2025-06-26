@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useWebSocket, type ChatMessage } from '@/providers/WebSocketProvider';
-import { useDebug } from "@/providers/DebugProvider";
 import { useChannel } from "@/providers/ChannelProvider";
 import { PaperAirplaneIcon } from "@heroicons/react/16/solid";
 import TextareaAutosize from 'react-textarea-autosize';
@@ -15,7 +14,6 @@ export default function ChatServer({ initialMessages = [] }: ChatServerProps) {
     const { sendMessage, currentServer, messages, isConnected } = useWebSocket();
     const [input, setInput] = useState("");
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
-    const { isDebugEnabled } = useDebug();
     const { currentChannel } = useChannel();
 
     // --- MODIFIÉ : On filtre les messages en utilisant l'ID du salon actuel (`currentChannel`) ---

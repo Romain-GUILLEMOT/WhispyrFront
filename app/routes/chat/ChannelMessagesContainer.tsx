@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams } from '@tanstack/react-router';
 import { useWebSocket } from '@/providers/WebSocketProvider';
 import ChatServer from '@/components/ChatServer'; // Votre composant existant
-import useSWR from 'swr';
-import { kyFetcher } from '@/api/http';
 
 export default function ChannelMessagesContainer() {
     const { serverId, channelId } = useParams({ from: '/chat/$serverId/$channelId' });

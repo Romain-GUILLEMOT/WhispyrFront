@@ -1,25 +1,16 @@
 import React from 'react';
 import { useUser } from '@/providers/UserProvider';
 import { useChannel } from '@/providers/ChannelProvider';
-import { useDebug } from '@/providers/DebugProvider';
 import { BellIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { HashtagIcon } from '@heroicons/react/20/solid';
 
 export default function Header() {
     const { user } = useUser();
     const { currentChannel } = useChannel();
-    const { isDebugEnabled } = useDebug();
 
     if (!user) return null;
 
-    const headerBaseClasses = `
-        h-[57px] flex-shrink-0 flex items-center justify-between px-6
-        bg-glass-medium/60 backdrop-blur-xl border-b border-glass-border
-        transition-all duration-300 relative
-    `;
-    const debugClasses = `
-        shadow-[0_4px_30px_rgba(139,68,255,0.2)]
-    `;
+
 
     return (
         <header className="h-[57px] flex-shrink-0 flex items-center justify-between px-6 border-b border-glass-border rounded-tr-2xl">
