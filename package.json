@@ -12,7 +12,7 @@
     "@headlessui/react": "^2.2.3",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.0.1",
-
+    "@tailwindcss/typography": "^0.5.16",
     "@tanstack/react-router": "^1.120.3",
     "@types/js-cookie": "^3.0.6",
     "@vitejs/plugin-react": "^4.4.1",
@@ -29,6 +29,9 @@
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.3",
+    "react-markdown": "^10.1.0",
+    "react-textarea-autosize": "^8.5.9",
+    "remark-gfm": "^4.0.1",
     "swr": "^2.3.3",
     "terser": "^5.39.2",
     "vite-plugin-compression": "^0.5.1",

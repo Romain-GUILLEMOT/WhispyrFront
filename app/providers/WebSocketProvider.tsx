@@ -1,48 +1,48 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
 import Cookies from "js-cookie";
 
-// Définition des types pour les messages front-end
+// Le type pour l'objet serveur que nous allons utiliser
+export type ServerInfo = {
+    id: string;
+    name: string;
+};
+
+// --- MODIFIÉ : Ajout de `channelId` aux types de messages ---
 export type Message = {
-    type: "chat" | "presence" | "join_server" | "heartbeat";
-    serverId?: string; // Optionnel pour les messages de chat et join_server
-    userId?: string;   // Optionnel pour les messages de présence
+    type: "chat" | "presence" | "join_server" | "heartbeat" | "join_server_success";
+    serverId?: string;
+    channelId?: string; // AJOUTÉ
+    serverName?: string;
+    userId?: string;
     username: string;
-    avatar?: string;   // Optionnel
+    avatar?: string;
     content: string;
-    timestamp?: number; // Optionnel, ajouté par le backend
-    status?: "online" | "offline"; // Optionnel pour la présence
+    timestamp?: number;
+    status?: "online" | "offline";
 };
 
 export type ChatMessage = Omit<Message, 'type' | 'status'> & {
     type: "chat";
     serverId: string;
+    channelId: string; // AJOUTÉ
     userId: string;
     username: string;
     timestamp: number;
 };
 
-export type PresenceMessage = Omit<Message, 'type' | 'content'> & {
-    type: "presence";
-    userId: string;
-    username: string;
-    status: "online" | "offline";
-};
-
-// Interface pour le contexte WebSocket
+// --- MODIFIÉ : La structure de `messages` est maintenant basée sur `channelId` ---
 interface WebSocketContextType {
     sendMessage: (message: Omit<Message, 'username' | 'avatar' | 'userId' | 'timestamp'>) => void;
-    currentServerId: string | null;
+    currentServer: ServerInfo | null;
     setCurrentServerId: (serverId: string) => void;
-    messages: { [serverId: string]: ChatMessage[] }; // Messages par ID de serveur
+    messages: { [channelId: string]: ChatMessage[] }; // La clé est `channelId`
     onlineUsers: { [userId: string]: { username: string; avatar?: string; status: "online" | "offline" } };
     isConnected: boolean;
     error: Event | null;
 }
 
-// Création du contexte
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
 
-// Props pour le fournisseur
 interface WebSocketProviderProps {
     children: ReactNode;
     currentUserId: string;
@@ -54,138 +54,100 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
     const ws = useRef<WebSocket | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState<Event | null>(null);
-    const [messages, setMessages] = useState<{ [serverId: string]: ChatMessage[] }>({});
-    const [onlineUsers, setOnlineUsers] = useState<{ [userId: string]: { username: string; avatar?: string; status: "online" | "offline" } }>({});
-    const [currentServerId, _setCurrentServerId] = useState<string | null>(null);
 
-    // Ajout d'un ref pour suivre si le WebSocket a déjà été initialisé
-    const wsInitialized = useRef(false);
+    // --- MODIFIÉ : L'état des messages est maintenant un dictionnaire clé/valeur avec `channelId` comme clé ---
+    const [messages, setMessages] = useState<{ [channelId: string]: ChatMessage[] }>({});
+
+    const [onlineUsers, setOnlineUsers] = useState<{ [userId: string]: { username: string; avatar?: string; status: "online" | "offline" } }>({});
+    const reconnectTimeoutId = useRef<number | null>(null);
+    const [currentServer, setCurrentServer] = useState<ServerInfo | null>(null);
 
     const sendMessage = useCallback((message: Omit<Message, 'username' | 'avatar' | 'userId' | 'timestamp'>) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-            const fullMessage: Message = {
-                ...message,
-                userId: currentUserId,
-                username: currentUserUsername,
-                avatar: currentUserAvatar,
-            };
+            const fullMessage: Partial<Message> = { ...message, userId: currentUserId, username: currentUserUsername, avatar: currentUserAvatar };
             ws.current.send(JSON.stringify(fullMessage));
-        } else {
-            console.warn('WebSocket is not open. Message not sent:', message);
         }
     }, [currentUserId, currentUserUsername, currentUserAvatar]);
 
     const setCurrentServerId = useCallback((serverId: string) => {
-        _setCurrentServerId(serverId);
-
+        setCurrentServer(null);
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             sendMessage({
                 type: 'join_server',
                 serverId: serverId,
-                content: `joined server ${serverId}`,
+                content: '',
             });
         }
     }, [sendMessage]);
 
     useEffect(() => {
-        // Cette condition empêche la double initialisation en mode StrictMode
-        if (wsInitialized.current) {
-            return;
-        }
-        wsInitialized.current = true; // Marque le WebSocket comme initialisé
+        const connect = () => {
+            const token = Cookies.get("access_token");
+            if (!token) return;
 
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.error('No JWT token found for WebSocket connection. Skipping connection attempt.');
-            return;
-        }
+            const wsUrl = `${import.meta.env.VITE_API_BASE_URL.replace('http', 'ws')}/ws?token=${token}`;
+            const newWs = new WebSocket(wsUrl);
+            ws.current = newWs;
+            let heartbeatInterval: number;
 
-        const wsUrl = `${import.meta.env.VITE_API_BASE_URL.replace('http', 'ws')}/ws?token=${token}`;
-        console.log('DEBUG: WebSocketProvider - Attempting connection to:', wsUrl);
+            newWs.onopen = () => {
+                setIsConnected(true);
+                console.log('🔗 WebSocket CONNECTED!');
+            };
 
-        ws.current = new WebSocket(wsUrl);
-
-        ws.current.onopen = () => {
-            setIsConnected(true);
-            setError(null);
-            console.log('🔗 WebSocket CONNECTED! (onopen triggered)');
-
-            const heartbeatInterval = setInterval(() => {
-                if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-                    sendMessage({ type: 'heartbeat', content: 'ping' });
+            newWs.onmessage = (event) => {
+                try {
+                    const msg: Message = JSON.parse(event.data);
+                    switch (msg.type) {
+                        // --- MODIFIÉ : On stocke les messages en utilisant leur `channelId` ---
+                        case 'chat':
+                            if (msg.channelId) {
+                                setMessages((prev) => ({
+                                    ...prev,
+                                    [msg.channelId!]: [...(prev[msg.channelId!] || []), msg as ChatMessage],
+                                }));
+                            }
+                            break;
+                        case 'presence':
+                            setOnlineUsers((prev) => ({ ...prev, [msg.userId!]: { username: msg.username, avatar: msg.avatar, status: msg.status! } }));
+                            break;
+                        case 'join_server_success':
+                            setCurrentServer({ id: msg.serverId!, name: msg.serverName! });
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (err) {
+                    console.error('❌ Error processing message:', err);
                 }
-            }, 25000);
+            };
 
-            return () => clearInterval(heartbeatInterval);
+            newWs.onerror = (e) => {
+                console.error('❌ WebSocket ERROR!', e);
+                setError(e);
+            };
+
+            newWs.onclose = (e) => {
+                setIsConnected(false);
+                clearInterval(heartbeatInterval);
+                reconnectTimeoutId.current = window.setTimeout(connect, 3000);
+            };
         };
 
-        ws.current.onmessage = (event) => {
-            console.log('DEBUG: WebSocket onmessage received:', event.data);
-            try {
-                const msg: Message = JSON.parse(event.data);
-                switch (msg.type) {
-                    case 'chat':
-                        setMessages((prevMessages) => ({
-                            ...prevMessages,
-                            [msg.serverId!]: [...(prevMessages[msg.serverId!] || []), msg as ChatMessage],
-                        }));
-                        break;
-                    case 'presence':
-                        setOnlineUsers((prevOnlineUsers) => ({
-                            ...prevOnlineUsers,
-                            [msg.userId!]: {
-                                username: msg.username,
-                                avatar: msg.avatar,
-                                status: msg.status!,
-                            },
-                        }));
-                        break;
-                    default:
-                        console.warn('DEBUG: Unknown message type received:', msg.type, msg);
-                }
-            } catch (err) {
-                console.error('❌ DEBUG: Error parsing or processing WebSocket message:', err, event.data);
-                setError(new Event('ParsingError'));
-            }
-        };
-
-        ws.current.onclose = (e) => {
-            setIsConnected(false);
-            console.log('🔌 WebSocket DISCONNECTED! (onclose triggered):', e.code, e.reason);
-            // Empêchez les tentatives de reconnexion en chaîne si le composant est en train de se démonter pour de bon
-            if (!wsInitialized.current) { // Si wsInitialized.current est false, cela signifie un réel démontage
-                return;
-            }
-            setTimeout(() => {
-                console.log('DEBUG: Attempting WebSocket reconnect...');
-                if (Cookies.get("access_token")) {
-                    ws.current = new WebSocket(wsUrl);
-                    wsInitialized.current = false; // Réinitialise pour permettre une nouvelle initialisation après reconnexion
-                }
-            }, 3000);
-        };
-
-        ws.current.onerror = (e) => {
-            console.error('❌ WebSocket ERROR! (onerror triggered):', e);
-            setError(e);
-            ws.current?.close();
-        };
+        connect();
 
         return () => {
-            // Le cleanup est toujours appelé, mais on ne ferme la connexion
-            // que si elle a été initialisée et n'est pas en cours de reconnexion temporaire
-            if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-                console.log('DEBUG: WebSocket cleanup function called. Closing active connection.');
+            if (reconnectTimeoutId.current) clearTimeout(reconnectTimeoutId.current);
+            if (ws.current) {
+                ws.current.onclose = null;
                 ws.current.close();
             }
-            ws.current = null;
-            wsInitialized.current = false; // Réinitialise le flag lors du démontage réel
         };
-    }, [sendMessage, currentServerId, currentUserId, currentUserUsername, currentUserAvatar]);
+    }, [sendMessage]);
 
     const contextValue = {
         sendMessage,
-        currentServerId,
+        currentServer,
         setCurrentServerId,
         messages,
         onlineUsers,
@@ -200,7 +162,6 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children, 
     );
 };
 
-// Hook personnalisé pour utiliser le contexte WebSocket
 export const useWebSocket = () => {
     const context = useContext(WebSocketContext);
     if (context === undefined) {

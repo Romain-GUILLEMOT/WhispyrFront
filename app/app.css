@@ -1,20 +1,47 @@
 @import "tailwindcss";
 /* app.css */
-
 @theme {
+  --color-whisper-50: #f4f0ff;
+  --color-whisper-100: #ebe4ff;
+  --color-whisper-200: #d9c9ff;
+  --color-whisper-300: #be9eff;
+  --color-whisper-400: #a36eff;
+  --color-whisper-500: #8b44ff; /* Couleur principale */
+  --color-whisper-600: #7c22f6;
+  --color-whisper-700: #6a18e0;
+  --color-whisper-800: #5814b9;
+  --color-whisper-900: #481394;
+  --color-whisper-950: #2a0a63; /* Très sombre */
+
+  --color-glass-dark: #110E19;   /* Fond principal de l'application */
+  --color-glass-medium: #1A1625; /* Pour les sidebars */
+  --color-glass-light: #231F32;  /* Pour les éléments interactifs */
+  --color-glass-border: theme('colors.white / 10%'); /* Bordure translucide */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+@layer base {
+  body {
+    background-color: theme('colors.glass.dark');
+    color: theme('colors.gray.200');
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
+/* Styles pour la barre de défilement (optionnel mais recommandé pour le style) */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
 .loader {
   animation: rotate 3s linear infinite;
 }
