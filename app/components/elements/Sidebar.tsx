@@ -10,7 +10,8 @@ import { PlusIcon, CameraIcon } from '@heroicons/react/24/solid';
 import ky from "ky";
 import { Link } from "@tanstack/react-router";
 import { useServer, type Server } from '@/providers/ServerProvider';
-import {SparklesIcon} from "@heroicons/react/16/solid"; // <-- Import du Provider
+import {SparklesIcon} from "@heroicons/react/16/solid";
+import ButtonElement from "@/components/elements/ButtonElement"; // <-- Import du Provider
 
 // --- Schéma de validation Zod (inchangé) ---
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -162,12 +163,12 @@ export default function Sidebar() {
                                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
 
                                     <div className="mt-8 flex justify-between items-center bg-[#161616] p-4 rounded-lg">
-                                        <button type="button" className="text-gray-300 hover:underline" onClick={closeModal}>
+                                        <ButtonElement type={"neutral"} buttonType="button" className="text-gray-300 hover:underline" onClick={closeModal}>
                                             Annuler
-                                        </button>
-                                        <button type="submit" className="px-6 py-2 bg-[#00C896] text-black font-bold rounded-lg hover:bg-[#00b584] transition-all disabled:bg-gray-500 disabled:cursor-not-allowed" disabled={isSubmitting}>
+                                        </ButtonElement>
+                                        <ButtonElement type={'primary'} buttonType="submit" disabled={isSubmitting}>
                                             {isSubmitting ? 'Création...' : 'Créer'}
-                                        </button>
+                                        </ButtonElement>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

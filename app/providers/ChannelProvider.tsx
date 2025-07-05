@@ -1,11 +1,6 @@
 import React, { createContext, useContext, useState, useMemo, type ReactNode } from 'react';
 
-// Le type pour un salon
-export interface Channel {
-    channel_id: string;
-    name: string;
-    type: string;
-}
+
 
 interface ChannelContextType {
     currentChannel: Channel | null;

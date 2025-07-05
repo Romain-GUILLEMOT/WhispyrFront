@@ -3,10 +3,11 @@ import { useUser } from '@/providers/UserProvider';
 import { useChannel } from '@/providers/ChannelProvider';
 import { BellIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { HashtagIcon } from '@heroicons/react/20/solid';
+import {useWebSocket} from "@/providers/WebSocketProvider";
 
 export default function Header() {
     const { user } = useUser();
-    const { currentChannel } = useChannel();
+    const { currentServer } = useWebSocket();
 
     if (!user) return null;
 
@@ -15,10 +16,9 @@ export default function Header() {
     return (
         <header className="h-[57px] flex-shrink-0 flex items-center justify-between px-6 border-b border-glass-border rounded-tr-2xl">
             <div className="flex items-center gap-2 text-white">
-                <HashtagIcon className="w-6 h-6 text-gray-400"/>
-                <h2 className="font-bold text-lg">
-                    {currentChannel?.name || ""}
-                </h2>
+                <h1 className="font-bold text-lg">
+                    {currentServer?.name || ""}
+                </h1>
             </div>
 
             <div className="flex items-center gap-5">

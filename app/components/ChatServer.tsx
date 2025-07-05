@@ -11,13 +11,12 @@ interface ChatServerProps {
 }
 
 export default function ChatServer({ initialMessages = [] }: ChatServerProps) {
-    const { sendMessage, currentServer, messages, isConnected } = useWebSocket();
+    const { sendMessage, currentChannel, currentServer, messages, isConnected } = useWebSocket();
     const [input, setInput] = useState("");
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
-    const { currentChannel } = useChannel();
 
     // --- MODIFIÉ : On filtre les messages en utilisant l'ID du salon actuel (`currentChannel`) ---
-    const currentMessages = currentChannel ? messages[currentChannel.channel_id] || [] : [];
+    const currentMessages = currentChannel ? messages[currentChannel.id] || [] : [];
     const allMessages = [...initialMessages, ...currentMessages];
 
     useEffect(() => {
@@ -33,13 +32,13 @@ export default function ChatServer({ initialMessages = [] }: ChatServerProps) {
             sendMessage({
                 type: 'chat',
                 serverId: currentServer.id,
-                channelId: currentChannel.channel_id, // AJOUTÉ : On envoie l'ID du salon
+                channelId: currentChannel.id, // AJOUTÉ : On envoie l'ID du salon
                 content: input,
             });
             setInput("");
         }
     };
-
+    console.log(currentChannel)
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5 no-scrollbar">

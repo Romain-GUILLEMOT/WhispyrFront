@@ -16,17 +16,6 @@ export default function ServerChatContainer() {
     // Récupérer le serverId des paramètres d'URL
 
     const { serverId } = useParams({ strict: false }) as ServerChatParams;
-    const { setCurrentServerId, messages, isConnected } = useWebSocket();
-
-    // Déclenchez le changement de serveur dans le WebSocketProvider
-    useEffect(() => {
-        if (serverId) {
-            setCurrentServerId(serverId);
-            // Optionnel: Ici, vous pouvez charger l'historique des messages pour ce serveur
-            // via une API REST.
-        }
-    }, [serverId, setCurrentServerId]);
-
     // Charger l'historique des messages via SWR
     // La clé SWR changera avec serverId, déclenchant une nouvelle requête si nécessaire
     /*const { data: historyMessages, error: historyError, isLoading: historyLoading } = useSWR(

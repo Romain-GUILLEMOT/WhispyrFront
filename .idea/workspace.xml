@@ -4,27 +4,23 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="Add new layout">
-      <change afterPath="$PROJECT_DIR$/app/components/elements/ChannelsSidebar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/providers/ChannelProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/providers/ServerProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/ChannelMessagesContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/ChatLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/NoChannels.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/NoServers.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/chat/ServerLayout.tsx" afterDir="false" />
+    <list default="true" id="4366f4ad-f1fd-44eb-8a91-02f60f4a06ea" name="Changes" comment="Correct errors">
+      <change afterPath="$PROJECT_DIR$/app/components/elements/ButtonElement.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/types/channelsList.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ChatServer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ChatServer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/elements/ChannelsSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/elements/ChannelsSidebar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/elements/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/elements/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/elements/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/elements/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/providers/ChannelProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/providers/ChannelProvider.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/providers/WebSocketProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/providers/WebSocketProvider.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routeConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routeConfig.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/router.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/chat/ChannelMessagesContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/chat/ChannelMessagesContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/chat/ChatLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/chat/ChatLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/chat/ServerChatContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/chat/ServerChatContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/chat/ServerLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/chat/ServerLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bun.lock" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +39,9 @@
   <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -92,8 +91,8 @@
       <window_info id="npm" side_tool="true" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.15964285" />
-      <window_info active="true" id="Commit" order="1" visible="true" weight="0.15964285" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" />
+      <window_info id="Commit" order="1" weight="0.15964285" />
       <window_info id="Welcome to GitHub Copilot" order="2" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -102,9 +101,9 @@
       <window_info anchor="bottom" id="File Transfer" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info active="true" anchor="bottom" id="Problems View" order="2" visible="true" weight="0.2991761" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.2991761" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.29869527" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.2991761" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.3303821" />
       <window_info anchor="bottom" id="Services" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.3300926" />
       <window_info anchor="right" id="PR AI Assistant" />
@@ -163,7 +162,8 @@
       <workItem from="1747318468387" duration="18768000" />
       <workItem from="1750666698642" duration="3974000" />
       <workItem from="1750672741399" duration="27805000" />
-      <workItem from="1750922638403" duration="445000" />
+      <workItem from="1750922638403" duration="3897000" />
+      <workItem from="1751029637557" duration="13643000" />
     </task>
     <task id="LOCAL-00001" summary="Remove Welcome component and assets.&#10;&#10;The Welcome page, along with its related dark and light mode SVG logos, has been removed. This eliminates unused assets and reduces project complexity.">
       <option name="closed" value="true" />
@@ -205,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750923096526</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Correct errors">
+      <option name="closed" value="true" />
+      <created>1750923193267</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750923193267</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,7 +225,8 @@
     <MESSAGE value="Continue working on server chat. Added debug mode" />
     <MESSAGE value="SonarQube" />
     <MESSAGE value="Add new layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add new layout" />
+    <MESSAGE value="Correct errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correct errors" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

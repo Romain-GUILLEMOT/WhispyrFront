@@ -5,16 +5,15 @@ import ChatServer from '@/components/ChatServer'; // Votre composant existant
 
 export default function ChannelMessagesContainer() {
     const { serverId, channelId } = useParams({ from: '/chat/$serverId/$channelId' });
-    const { setCurrentServerId } = useWebSocket();
+    const { setCurrentServerId, setCurrentChannelId, isConnected} = useWebSocket();
 
     // On notifie le WebSocketProvider qu'on est sur un serveur,
     // mais la logique de "join" d'un salon spécifique se fait maintenant via le chat
     useEffect(() => {
-        if (serverId) {
-            setCurrentServerId(serverId);
-        }
-    }, [serverId, setCurrentServerId]);
-
+        setCurrentServerId(serverId)
+        setCurrentChannelId(serverId, channelId)
+        console.log('Connected to the channel: '+ channelId)
+    }, [serverId, setCurrentServerId, channelId, isConnected]);
     // Maintenant, on charge l'historique des messages pour le *salon*
     /*const { data: historyResponse, isLoading } = useSWR(
         channelId ? `channels/${channelId}/messages` : null,

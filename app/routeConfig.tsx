@@ -2,17 +2,10 @@ import { lazyRouteComponent, createRoute, redirect } from '@tanstack/react-route
 import { kyFetcher } from '@/api/http';
 import App from '@/App';
 import { createRootRoute } from '@tanstack/react-router';
+import {useWebSocket} from "@/providers/WebSocketProvider";
+import type {ChannelsAPI} from "@/types/channelsList";
 
-// --- Types pour les données de l'API ---
-interface Server {
-    server_id: string;
-}
-interface Channel {
-    channel_id: string;
-}
-interface Category {
-    channels: Channel[];
-}
+
 
 // --- Définition des Routes ---
 
@@ -25,12 +18,18 @@ export const rootRoute = createRootRoute({
 export const homeRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès a: ${location.pathname}`);
+    },
     component: lazyRouteComponent(() => import('@/routes/home')),
 });
 
 export const loginRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/auth/login',
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès a: ${location.pathname}`);
+    },
     component: lazyRouteComponent(() => import('@/routes/auth/LoginContainer')),
 })
 
@@ -38,6 +37,9 @@ export const loginRoute = createRoute({
 export const chatRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: 'chat',
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès a: ${location.pathname}`);
+    },
     component: lazyRouteComponent(() => import('@/routes/chat/ChatLayout')),
 });
 
@@ -45,6 +47,9 @@ export const chatRoute = createRoute({
 export const serverRoute = createRoute({
     getParentRoute: () => chatRoute,
     path: '$serverId',
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès a: ${location.pathname}`);
+    },
     component: lazyRouteComponent(() => import('@/routes/chat/ServerLayout')),
 });
 
@@ -52,25 +57,34 @@ export const serverRoute = createRoute({
 // 5. Route d'index pour un serveur (gère la redirection vers le premier salon)
 export const serverIndexRoute = createRoute({
     getParentRoute: () => serverRoute, // Le parent est bien `serverRoute`
-    path: '/', // Le chemin est maintenant unique car il est relatif à son parent
+    path: '/',
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès: ${location.pathname}`);
+    }, // Le chemin est maintenant unique car il est relatif à son parent
     loader: async ({ params }) => {
+        let categories: ChannelsAPI;
         try {
-            const categories = await kyFetcher(`servers/${params.serverId}/channels`) as Category[];
-            const firstChannel = categories?.[0]?.channels?.[0];
-
-            if (firstChannel) {
-                throw redirect({
-                    to: '/chat/$serverId/$channelId',
-                    params: {
-                        serverId: params.serverId,
-                        channelId: firstChannel.channel_id,
-                    },
-                    replace: true,
-                });
-            }
+            categories = await kyFetcher(`server/${params.serverId}/channels`) as ChannelsAPI;
         } catch (error) {
-            console.error("Impossible de fetch les salons pour la redirection :", error);
+            console.error("Impossible de fetch les salons :", error);
+            // En cas d'échec du fetch, on retourne un objet vide pour rendre le composant NoChannels
+            return {};
         }
+
+        const firstChannel = categories?.categories[0]?.channels?.[0];
+        // Si on trouve un salon, on lance la redirection en dehors du bloc try...catch
+        if (firstChannel && firstChannel.channel_id) {
+            throw redirect({
+                to: '/chat/$serverId/$channelId',
+                params: {
+                    serverId: params.serverId,
+                    channelId: firstChannel.channel_id,
+                },
+                replace: true,
+            });
+        }
+
+        // S'il n'y a pas de salons, on retourne un objet vide pour rendre le composant NoChannels
         return {};
     },
     component: lazyRouteComponent(() => import('@/routes/chat/NoChannels')),
@@ -80,5 +94,8 @@ export const serverIndexRoute = createRoute({
 export const channelRoute = createRoute({
     getParentRoute: () => serverRoute, // Le parent est bien `serverRoute`
     path: '$channelId', // Le chemin est relatif à son parent
+    beforeLoad: async ({ location }) => {
+        console.log(`Tentative d'accès a: ${location.pathname}`);
+    },
     component: lazyRouteComponent(() => import('@/routes/chat/ChannelMessagesContainer')),
 });
