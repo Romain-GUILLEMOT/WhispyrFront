@@ -4,11 +4,12 @@ import { useWebSocket } from '@/providers/WebSocketProvider';
 import ChatServer from '@/components/ChatServer'; // Votre composant existant
 
 export default function ChannelMessagesContainer() {
-    const { serverId, channelId } = useParams({ from: '/chat/$serverId/$channelId' });
-    const { setCurrentServerId, setCurrentChannelId, isConnected} = useWebSocket();
+    const { setCurrentServerId, setCurrentChannelId, currentChannel, isConnected} = useWebSocket();
 
     // On notifie le WebSocketProvider qu'on est sur un serveur,
     // mais la logique de "join" d'un salon spécifique se fait maintenant via le chat
+    const { serverId, channelId } = useParams({ from: '/chat/$serverId/$channelId' });
+
     useEffect(() => {
         setCurrentServerId(serverId)
         setCurrentChannelId(serverId, channelId)
@@ -20,7 +21,7 @@ export default function ChannelMessagesContainer() {
         kyFetcher
     );
 */
-    if (!channelId) {
+    if (!currentChannel) {
         return <div className="p-4 text-center text-gray-400">Sélectionnez un salon pour commencer.</div>;
     }
 
